@@ -133,6 +133,46 @@ html[data-theme="light"] .icon-btn .i-moon{display:none}
 html[data-theme="light"] .chip .n{background:rgba(15,23,42,.07)}
 .chip[aria-pressed="true"] .n{background:rgba(0,0,0,.18)}
 
+/* ---------- hero ---------- */
+.hero{
+  position:relative; margin:var(--space-5) 0 var(--space-6);
+  border-radius:var(--r-lg); overflow:hidden;
+  border:1px solid #2A3550; background:#0B1120;
+  min-height:190px; display:flex; align-items:center;
+}
+.hero-art{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.hero-txt{position:relative; padding:var(--space-5) var(--space-4); max-width:640px}
+@media(min-width:768px){.hero{min-height:230px} .hero-txt{padding:var(--space-6)}}
+.hero-txt h2{
+  margin:0 0 var(--space-2); color:#F8FAFC;
+  font-size:clamp(20px,4.4vw,30px); font-weight:700;
+  line-height:1.2; letter-spacing:-.02em;
+  text-shadow:0 2px 18px rgba(3,7,18,.85);
+}
+.hero-txt h2 em{
+  font-style:normal;
+  background:linear-gradient(96deg,#67E8F9,#A78BFA 45%,#F472B6);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero-txt p{
+  margin:0; font-size:14.5px; line-height:1.55; color:#C3CEE0;
+  text-shadow:0 1px 12px rgba(3,7,18,.9);
+}
+.hero-stats{display:flex; flex-wrap:wrap; gap:var(--space-2); margin-top:var(--space-4)}
+.hero-stats span{
+  font-size:12px; font-weight:600; letter-spacing:.02em; color:#DDE5F2;
+  padding:6px 11px; border-radius:999px;
+  background:rgba(15,23,42,.66); border:1px solid rgba(148,163,184,.34);
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
+@media(prefers-reduced-motion:no-preference){
+  .hero-art .drift{animation:drift 15s ease-in-out infinite alternate}
+  .hero-art .drift-b{animation:drift 19s ease-in-out infinite alternate-reverse}
+  .hero-art .flicker{animation:flicker 6s ease-in-out infinite}
+}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(14px,-11px)}}
+@keyframes flicker{0%,100%{opacity:.85}50%{opacity:1}}
+
 /* ---------- grid ---------- */
 main{padding:var(--space-5) 0 var(--space-8)}
 .count{font-size:13px; color:var(--fg-faint); padding-bottom:var(--space-4)}
@@ -269,6 +309,112 @@ footer p{margin:0 0 var(--space-2)}
 
 <main>
   <div class="wrap">
+    <section class="hero">
+      <svg class="hero-art" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0B1120"/><stop offset=".55" stop-color="#141B36"/><stop offset="1" stop-color="#1E1140"/>
+          </linearGradient>
+          <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#22D3EE" stop-opacity="0"/>
+            <stop offset=".42" stop-color="#22D3EE" stop-opacity=".95"/>
+            <stop offset=".72" stop-color="#A78BFA" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#F472B6" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="beam2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#34D399" stop-opacity="0"/>
+            <stop offset=".5" stop-color="#34D399" stop-opacity=".8"/>
+            <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#334E7A" stop-opacity=".72"/><stop offset="1" stop-color="#2A1F5C" stop-opacity=".55"/>
+          </linearGradient>
+          <filter id="soft" x="-55%" y="-55%" width="210%" height="210%">
+            <feGaussianBlur stdDeviation="42"/>
+          </filter>
+          <filter id="glow" x="-45%" y="-45%" width="190%" height="190%">
+            <feGaussianBlur stdDeviation="5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <rect width="1200" height="300" fill="url(#sky)"/>
+
+        <!-- ambient light blobs -->
+        <g filter="url(#soft)" opacity=".72">
+          <circle class="drift"   cx="905" cy="72"  r="105" fill="#7C3AED"/>
+          <circle class="drift-b" cx="1082" cy="215" r="92" fill="#0EA5E9"/>
+          <circle class="drift"   cx="700" cy="262" r="78"  fill="#DB2777" opacity=".72"/>
+          <circle class="drift-b" cx="272" cy="248" r="86"  fill="#16A34A" opacity=".5"/>
+        </g>
+
+        <!-- horizon grid -->
+        <g stroke="#38BDF8" stroke-opacity=".16" fill="none">
+          <path d="M0 250 H1200 M0 268 H1200 M0 288 H1200"/>
+          <path d="M120 300 L330 244 M300 300 L450 244 M520 300 L580 244 M760 300 L716 244 M980 300 L840 244 M1180 300 L965 244"/>
+        </g>
+
+        <!-- light streams -->
+        <g class="flicker" fill="none" stroke-linecap="round">
+          <path d="M-20 214 C 250 210, 330 150, 560 138 S 900 118, 1230 92" stroke="url(#beam)" stroke-width="13" opacity=".82"/>
+          <path d="M-20 236 C 230 234, 350 190, 600 178 S 930 166, 1230 146" stroke="url(#beam2)" stroke-width="7" opacity=".62"/>
+          <path d="M-20 192 C 280 186, 300 126, 520 104 S 880 74, 1230 44" stroke="url(#beam)" stroke-width="3.5" opacity=".5"/>
+        </g>
+
+        <!-- floating prompt cards -->
+        <g filter="url(#glow)">
+          <g transform="translate(624 34) rotate(-7)" opacity=".95">
+            <rect width="196" height="118" rx="13" fill="url(#glass)" stroke="#67E8F9" stroke-opacity=".62"/>
+            <rect x="17" y="21" width="118" height="8" rx="4" fill="#A5F3FC" fill-opacity=".92"/>
+            <rect x="17" y="42" width="162" height="6" rx="3" fill="#CBD5E1" fill-opacity=".5"/>
+            <rect x="17" y="57" width="139" height="6" rx="3" fill="#CBD5E1" fill-opacity=".42"/>
+            <rect x="17" y="72" width="152" height="6" rx="3" fill="#CBD5E1" fill-opacity=".34"/>
+            <rect x="17" y="92" width="52" height="13" rx="6.5" fill="#22C55E" fill-opacity=".82"/>
+          </g>
+          <g transform="translate(852 108) rotate(6)" opacity=".9">
+            <rect width="176" height="104" rx="13" fill="url(#glass)" stroke="#C4B5FD" stroke-opacity=".62"/>
+            <rect x="16" y="19" width="96" height="8" rx="4" fill="#DDD6FE" fill-opacity=".92"/>
+            <rect x="16" y="39" width="144" height="6" rx="3" fill="#CBD5E1" fill-opacity=".46"/>
+            <rect x="16" y="54" width="122" height="6" rx="3" fill="#CBD5E1" fill-opacity=".38"/>
+            <rect x="16" y="75" width="46" height="12" rx="6" fill="#A78BFA" fill-opacity=".78"/>
+          </g>
+          <g transform="translate(455 128) rotate(4)" opacity=".72">
+            <rect width="150" height="92" rx="12" fill="url(#glass)" stroke="#F9A8D4" stroke-opacity=".5"/>
+            <rect x="15" y="18" width="80" height="7" rx="3.5" fill="#FBCFE8" fill-opacity=".84"/>
+            <rect x="15" y="36" width="118" height="6" rx="3" fill="#CBD5E1" fill-opacity=".4"/>
+            <rect x="15" y="51" width="98" height="6" rx="3" fill="#CBD5E1" fill-opacity=".32"/>
+          </g>
+        </g>
+
+        <!-- terminal caret -->
+        <g transform="translate(1046 44)" opacity=".92" filter="url(#glow)">
+          <path d="M0 8 L15 20 L0 32" fill="none" stroke="#4ADE80" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="24" y="28" width="34" height="5" rx="2.5" fill="#4ADE80"/>
+        </g>
+
+        <!-- sparks -->
+        <g fill="#E0F2FE">
+          <circle cx="392" cy="86" r="2.6" opacity=".85"/><circle cx="497" cy="52" r="1.9" opacity=".6"/>
+          <circle cx="806" cy="228" r="2.3" opacity=".7"/><circle cx="1131" cy="112" r="2" opacity=".62"/>
+          <circle cx="596" cy="232" r="1.7" opacity=".5"/><circle cx="962" cy="36" r="2.2" opacity=".66"/>
+        </g>
+
+        <!-- left vignette so text stays readable -->
+        <rect width="720" height="300" fill="#080D1A" opacity=".62"/>
+      </svg>
+
+      <div class="hero-txt">
+        <h2>130 промптов, <em>готовых к работе</em></h2>
+        <p>Отобраны вручную из базы на 2045 записей и переведены на русский. Один файл — работает без интернета, пересылается вложением.</p>
+        <div class="hero-stats">
+          <span>RU / EN</span>
+          <span>10 категорий</span>
+          <span>Копирование в один клик</span>
+          <span>Офлайн</span>
+        </div>
+      </div>
+    </section>
+
     <p class="count" id="count" aria-live="polite"></p>
     <div class="grid" id="grid"></div>
   </div>
