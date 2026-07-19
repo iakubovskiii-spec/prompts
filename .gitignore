@@ -1,0 +1,8 @@
+# Whitelist approach: ignore everything, then allow only what this repo publishes.
+# The working folder holds unrelated local files (index.html, .claude/, .agents/,
+# skills-lock.json, the 5 MB source CSV) that must not be committed.
+*
+
+!.gitignore
+!README.md
+!promptbook.html
